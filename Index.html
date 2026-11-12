@@ -3,341 +3,451 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BANDA KADOSH | LOUVORZÃO</title>
+    <title>Banda Kadosh | Louvorzão</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #000; color: #fff; min-height: 100vh; }
-        
-        .screen {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.4s ease; opacity: 0; pointer-events: none;
-            background: radial-gradient(ellipse at center, #2b0a0a 0%, #000 70%); padding: 2rem;
+        body {
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, #2b0000 0%, #000 70%);
         }
-        .screen.active { opacity: 1; pointer-events: auto; }
-
-        h1.banda {
-            font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800;
-            letter-spacing: 0.25em; text-align: center; margin-bottom: 0.3rem;
-        }
-        h1.banda span {
-            color: #ff0000; text-shadow: 0 0 25px rgba(255,0,0,0.7), 0 0 50px rgba(255,0,0,0.4);
-        }
-        h2.titulo-medley {
-            color: #ff4444; font-size: clamp(1.1rem, 4vw, 1.5rem);
-            letter-spacing: 0.3em; margin-bottom: 0.5rem; text-transform: uppercase;
-            font-weight: 600;
-        }
-        p.versiculo { font-size: 0.9rem; opacity: 0.5; margin-bottom: 2.5rem; text-align: center; }
-
-        .botoes-musicas {
-            display: flex; flex-direction: column; gap: 0.8rem; align-items: center; width: 100%; max-width: 600px;
-        }
+        .inicio { text-align: center; animation: fadeIn 1.5s ease-in; }
+        h1 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 300; letter-spacing: 0.5rem; line-height: 1; }
+        .kadosh { color: #ff0000; text-shadow: 0 0 30px #ff000080; }
+        .louvorzao { font-size: 1.3rem; letter-spacing: 0.3rem; color: #ff0000; margin: 1.5rem 0 1rem; text-shadow: 0 0 15px #ff000060; }
+        .tema { font-size: 1rem; letter-spacing: 0.15rem; color: #999; margin-bottom: 0.5rem; }
+        .versiculo { font-size: 0.95rem; color: #666; margin-bottom: 3rem; font-style: italic; }
+        .botoes-musicas { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 3rem; }
         .btn-musica {
-            background: linear-gradient(135deg, rgba(139,0,0,0.7), rgba(180,0,0,0.5));
-            border: 2px solid #ff3333; color: white;
-            padding: 1.1rem 1.5rem; font-size: 0.95rem; cursor: pointer; transition: all 0.3s ease;
-            border-radius: 50px; width: 100%; text-align: center; line-height: 1.4;
-            font-weight: 500;
+            background: transparent;
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            padding: 1rem 2rem;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        .btn-musica:hover { 
-            background: linear-gradient(135deg, #cc0000, #ff2222);
-            box-shadow: 0 0 25px rgba(255,0,0,0.5); transform: scale(1.02);
+        .btn-musica:hover { background: #ff0000; color: #000; box-shadow: 0 0 20px #ff000080; }
+        .pagina-musica { display: none; text-align: center; max-width: 800px; width: 100%; }
+        .artista { color: #666; font-size: 1rem; margin-bottom: 2rem; }
+        .letra { white-space: pre-line; font-size: 1.05rem; line-height: 1.9; color: #ddd; margin: 2rem 0; }
+        .medley-titulo { color: #ff0000; font-size: 1.15rem; margin: 2.5rem 0 1rem; letter-spacing: 0.1rem; }
+        .btn-voltar {
+            background: transparent;
+            border: 1px solid #666;
+            color: #999;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s;
         }
-        .btn-artista { font-size: 0.78rem; opacity: 0.65; margin-top: 0.25rem; display: block; }
-
-        .top-bar {
-            position: absolute; top: 0; left: 0; width: 100%; padding: 1.2rem;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 0.8rem; letter-spacing: 0.15em; color: #777;
+        .btn-voltar:hover { border-color: #ff0000; color: #ff0000; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .top-bar .name { color: #fff; font-weight: 600; }
-        .top-bar .page-num { position: absolute; right: 1.2rem; }
-        .divider {
-            position: absolute; top: 55px; left: 5%; width: 90%; height: 2px;
-            background: linear-gradient(to right, #cc0000, transparent);
-        }
-        .lyric-title {
-            color: #cc4444; font-size: 0.9rem; letter-spacing: 0.15em;
-            text-transform: uppercase; margin-bottom: 2rem; text-align: center; line-height: 1.5;
-        }
-        .lyric-artist { font-size: 0.8rem; opacity: 0.5; margin-top: 0.3rem; display: block; }
-        .lyrics {
-            text-align: center; font-size: clamp(1rem, 3vw, 1.4rem);
-            line-height: 1.8; padding: 0 1rem; max-width: 700px;
-        }
-        .nav-buttons {
-            position: absolute; bottom: 2rem; display: flex; gap: 0.8rem;
-        }
-        .nav-btn {
-            background: #880000; border: none; color: white; width: 48px; height: 48px;
-            border-radius: 8px; font-size: 1rem; cursor: pointer;
-            box-shadow: 0 0 8px rgba(136,0,0,0.4); transition: all 0.2s ease;
-        }
-        .nav-btn:hover { background: #cc0000; }
     </style>
 </head>
 <body>
 
-    <!-- ====================================== -->
-    <!-- TELA INICIAL - LOUVORZÃO -->
-    <!-- ====================================== -->
-    <div class="screen active" id="inicio">
-        <h1 class="banda">BANDA<br><span>KADOSH</span></h1>
-        <h2 class="titulo-medley">🔥 LOUVORZÃO 🔥</h2>
-        <p class="versiculo">Oséias 6:1-2 • Vinde, voltemos ao Senhor</p>
-
+    <div id="telaInicio" class="inicio">
+        <h1>BANDA<br><span class="kadosh">KADOSH</span></h1>
+        <p class="louvorzao">LOUVORZÃO</p>
+        <p class="tema">"VINDE, E VOLTEMOS AO SENHOR"</p>
+        <p class="versiculo">Oséias 6:1-2</p>
         <div class="botoes-musicas">
-            <button class="btn-musica" onclick="mostrar('m1-p1')">
-                🎵 COMO ANTIGAMENTE + VENTOS DO AVIVAMENTO
-            </button>
-            <button class="btn-musica" onclick="mostrar('m2-p1')">
-                🎵 O SENHOR, NÃO OS ÍDOLOS
-                <span class="btn-artista">Thamires García</span>
-            </button>
-            <button class="btn-musica" onclick="mostrar('m3-p1')">
-                🎵 DE VOLTA + JESUS MEU PRIMEIRO AMOR + BÁLSAMO DE GILEADE
-            </button>
-            <button class="btn-musica" onclick="mostrar('m4-p1')">
-                🎵 EU ME LEMBRO
-                <span class="btn-artista">Morada</span>
-            </button>
-            <button class="btn-musica" onclick="mostrar('m5-p1')">
-                🎵 HÁ UM VINHO NOVO
-                <span class="btn-artista">Ministério Zoe</span>
-            </button>
+            <button class="btn-musica" onclick="mostrarMusica('musica1')">🎵 O Senhor, Não os Ídolos</button>
+            <button class="btn-musica" onclick="mostrarMusica('musica2')">🎵 Eu Me Lembro</button>
+            <button class="btn-musica" onclick="mostrarMusica('musica3')">🎵 Há Um Vinho Novo</button>
+            <button class="btn-musica" onclick="mostrarMusica('musica4')">🎵 Como Antigamente + Ventos do Avivamento</button>
+            <button class="btn-musica" onclick="mostrarMusica('musica5')">🎵 Medley: De Volta + Bálsamo de Gileade</button>
         </div>
     </div>
 
-    <!-- ====================================== -->
-    <!-- FUNÇÕES DE NAVEGAÇÃO -->
-    <!-- ====================================== -->
+    <div id="musica1" class="pagina-musica">
+        <h2 style="color:#ff0000; font-size:2rem;">O SENHOR, NÃO OS ÍDOLOS</h2>
+        <p class="artista">— Thamires García</p>
+        <div class="letra">
+Pecamos, Senhor
+O nosso coração está tão longe
+E estes nossos ídolos nos fizeram cegos como eles são
+Faz de novo o povo saber
+Que além de Ti não há mais nenhum Deus
+
+Quem mais poderia dizer
+Aquilo que vai acontecer no futuro?
+Quem mais poderia fazer
+Aquilo que se fez desde os tempos antigos?
+O Senhor, e não os ídolos
+O Senhor, e não os ídolos
+
+Quem mais poderia dizer
+Aquilo que vai acontecer no futuro?
+Quem mais poderia fazer
+Aquilo que se fez desde os tempos antigos?
+Só o Senhor, e não os ídolos
+O Senhor, e não os ídolos
+
+É como está escrito
+Assim diz o Senhor
+Eu me lembro de você, meu povo
+Da sua afeição quando você era jovem
+Do seu amor quando noiva
+E de como você me seguia no deserto
+Numa terra em que não se semeia
+
+Escutem a palavra do Senhor
+Que injustiça seus pais acharam em mim
+Para que se afastassem assim
+Seguindo ídolos sem valor e tornando-se como eles?
+Ninguém perguntou por mim!
+
+Os sacerdotes não disseram: Onde está o Senhor?
+Os que tratavam da lei não me conheceram
+Os pastores se revoltaram contra mim
+Os profetas profetizaram por Baal
+E o meu povo trocou a sua glória
+Por aquilo que não tem proveito algum
+E cometeu dois males
+A mim me abandonaram, Fonte de Águas Vivas
+E cavaram cisternas rachadas!
+
+Oh, geração
+Considere a palavra do Senhor!
+Será que eu tenho sido um deserto pra vocês?
+Então, por que vocês dizem
+Somos livres pra fazer o que quisermos?
+Mas reconhece agora que você transgrediu contra o Senhor
+E se prostituiu com estranhos
+E não deu ouvidos a minha voz
+Volte pra mim, meu povo, voltem, filhos!
+Voltem! E eu os levarei a Sião
+
+Derruba os amores rivais
+Expõe todos esses amantes
+E traz o nosso coração de volta ao dia do primeiro amor
+
+Pois é como está escrito
+Eu me lembro bem, diz o Senhor
+Eu me lembro bem
+De quando você era noiva e me seguia pelo deserto
+Em uma terra em que não se semeia
+
+Ah, eu sei!
+Ah, eu sei que o Senhor se lembra
+Dos dias do primeiro amor da sua igreja
+Eu sei que estás chamando a sua amada de novo
+
+Quem mais poderia dizer?
+Quem mais poderia dizer
+Aquilo que vai acontecer no futuro?
+Quem mais poderia fazer
+Aquilo que se fez desde os tempos antigos?
+O Senhor, e não os ídolos
+Só o Senhor, e não os ídolos
+
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+Só o Senhor, e não os ídolos
+O Senhor, e não os ídolos
+
+E nós declaramos a nossa devoção para sempre
+
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+Só o Senhor, e não os ídolos
+O Senhor, e não os ídolos
+
+Eles têm boca e não falam
+Têm olhos e não veem
+Têm mãos e não apalpam
+Têm pés e não caminham
+
+Só o Senhor é Deus, não os ídolos
+O Senhor, não os ídolos
+
+Eles têm boca e não podem falar, Senhor
+Eles têm boca e não falam
+Têm olhos e não veem
+Têm mãos e não apalpam
+Têm pés e não caminham
+
+Só o Senhor é Deus, não os ídolos
+O Senhor, e não os ídolos
+
+O Senhor, mais ninguém
+O Senhor, só o Senhor
+Diga a Ele
+
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+O Senhor, não os ídolos
+Só o Senhor, e não os ídolos
+O Senhor, e não os ídolos
+        </div>
+        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+    </div>
+
+    <div id="musica2" class="pagina-musica">
+        <h2 style="color:#ff0000; font-size:2rem;">EU ME LEMBRO</h2>
+        <p class="artista">— Morada</p>
+        <div class="letra">
+Eu me lembro quando a fome começou
+Eu me lembro quando Jesus me despertou
+Eu me lembro quando meu coração incendiou
+
+Era uma presença que eu não conhecia
+Uma revelação que eu ainda não tinha
+O tempo passava e eu nem percebia
+Era como fogo que não se apagava
+
+Grato pela vida
+Grato pela história
+Por tudo que provei e vi
+E experimentei em Ti
+
+Mas o intenso desejo
+Arde em meu peito
+Não quero só lembrar do fogo
+Há mais da Tua glória me chamando
+
+Fome dos primeiros dias
+Sede dos primeiros dias
+Estou voltando ao primeiro amor
+Ao coração de quando me encontrou
+
+E ela está me chamando
+E eu vou
+
+Dá-me mais do seu óleo
+Dá-me mais do seu rio
+Lágrimas nos olhos
+Sede da presença
+
+Dá-me mais do teu vinho
+Dá-me mais do pão vivo
+Fogo em meus ossos
+Óleo de alegria
+
+Pá-para-pá
+Pá-para-pá
+pá-para-pá
+        </div>
+        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+    </div>
+
+    <div id="musica3" class="pagina-musica">
+        <h2 style="color:#ff0000; font-size:2rem;">HÁ UM VINHO NOVO</h2>
+        <p class="artista">— Ministério Zoe</p>
+        <div class="letra">
+Já cantei uma canção de amor
+Já cantei uma canção da graça
+E por quê não cantar na dor,
+Quando o meu coração está quebrado?
+Há um vinho novo pra descer,
+Sobre odres que já foram rasgados
+E agora são novos outra vez
+
+Há uma esperança pra cantar,
+Aquele que fez a ferida ligará
+Há um vinho novo pra descer,
+Sobre odres que já foram rasgados
+E agora são novos outra vez
+
+Eu cantarei uma canção na minha dor
+O choro pode durar uma noite,
+A alegria vem com a manhã
+
+E a virgem se alegrará na dança, os
+Jovens e os velhos também
+Eu me alegrarei e toda terra também!
+Eu dançarei, sobre toda dor
+
+Pois há um vinho novo pra descer,
+Sobre odres que já foram rasgados,
+E agora são novos outra vez
+Há uma esperança pra cantar,
+Aquele que fez a ferida ligará
+        </div>
+        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+    </div>
+
+    <div id="musica4" class="pagina-musica">
+        <h2 style="color:#ff0000; font-size:2rem;">COMO ANTIGAMENTE • VENTOS DO AVIVAMENTO</h2>
+        <p class="artista">Medley</p>
+        
+        <p class="medley-titulo">🎵 COMO ANTIGAMENTE</p>
+        <div class="letra">
+Já faz tempo que eu não ouço sua voz
+Já faz tempo que eu não ouço sua oração
+Quando tempo faz, que eu não te dou um louvor
+Aquela madrugada eu olhei pro seu quarto
+A porta estava fechada e você dormindo
+Sem falar de quando entrei naquele culto
+Mas você não estava ligado comigo
+Quanto tempo faz que eu não posso te usar
+O tempo está passando e você assim
+Quantos hinos não pude te revelar
+E das profundidades da minha palavra
+O tempo está passando e você assim
+Eu quero no teu quarto te encontrar
+E como eu falava contigo falar
+Faz tanto tempo que você está assim
+Dentro da igreja e longe de mim
+Mas hoje tenho uma palavra pra você
+Como uma brasa quero te acender
+E me encontrar no centro do teu coração
+Quero segurar a tua mão
+Mas tudo só depende de você
+A decisão é tua então pode tomar
+Abra os seus braços e o coração
+Sinta agora eu te abraçar
+
+Volta ao primeiro amor
+Quero te abraçar de novo
+Volta ao primeiro amor
+Quero te fazer um vaso novo
+
+Se tu voltar, vou te tocar
+Se tu voltar, vou te usar
+Se tu voltar, vou revelar
+Os meus mistérios pra você
+Se tu voltar, eu vou te levantar
+Se tu voltar, eu vou te exaltar
+Se tu voltar eu vou te encher como antigamente
+        </div>
+        
+        <p class="medley-titulo">🎵 VENTOS DO AVIVAMENTO</p>
+        <div class="letra">
+Oh faz chover, Senhor
+Águas que regem a terra
+Que façam brotar as sementes
+Dos frutos de um avivamento
+
+Oh faz chover, Senhor
+Atende o Teu povo que clama
+Que anseia por ver o Teu braço
+Agindo com poder e graça
+Em nossa nação
+
+O meu coração tem anseio
+De ver Tua glória
+Enchendo a terra
+Como as águas cobrem o mar
+De ver ser cumprindo na igreja
+A promessa que diz
+Aquele que crer
+Obras maiores ainda fará
+
+O muito que nos temos vistos
+Não passa de gotas
+Diante daquilo que pode
+E queres fazer
+
+Oh faz chover, Senhor
+Águas que regem a terra
+Que façam brotar as sementes
+Dos frutos de um avivamento
+
+Oh faz chover, Senhor
+Atende o Teu povo que clama
+Que anseia por ver o Teu braço
+Agindo com poder e graça
+Em nossa nação
+        </div>
+        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+    </div>
+
+    <div id="musica5" class="pagina-musica">
+        <h2 style="color:#ff0000; font-size:2rem;">MEDLEY</h2>
+        <p class="artista">De Volta • Jesus Meu Primeiro Amor • Voltemos ao Início • Bálsamo de Gileade</p>
+        
+        <p class="medley-titulo">🎵 DE VOLTA</p>
+        <div class="letra">
+Vinde, voltemos ao Senhor
+Pois Ele nos levou ao deserto
+Para nos lembrar
+Das primeiras obras
+E da essência
+
+Muros Ele levantará
+Em nossos caminhos
+Com espinhos
+Ele nos cercará
+Para ensinar que no final
+
+Ele amadurece o nosso amor
+Ainda que seja pela dor
+Ele é fiel, pra sempre bom
+
+Eu quero me apaixonar outra vez
+Eu quero me desesperar outra vez
+Eu quero perder o sono outra vez
+Queimando de amor por Ti
+
+Leva-nos de volta ao primeiro amor
+
+Nós iremos contigo, amado amigo
+Retornaremos ao lugar que pertencemos
+
+Vinde, voltemos ao Senhor
+Pois Ele nos despedaçou e nos sarará
+Fez a ferida e a ligará
+Nos revigorará e viveremos diante dEle
+        </div>
+        
+        <p class="medley-titulo">🎵 BÁLSAMO DE GILEADE</p>
+        <div class="letra">
+Há um bálsamo em Gileade
+Há unção em Gileade
+Vem sobre mim para curar
+Vem sobre a filha de Sião
+
+Há um médico em Gileade
+Há remédio em Gileade
+Vem sobre mim para curar
+Restaura a filha de Sião
+
+Há um bálsamo em Gileade
+Há unção em Gileade
+Vem sobre mim para curar
+Vem sobre a filha de Sião
+
+Há um médico em Gileade
+Há remédio em Gileade
+Vem sobre mim para curar
+Restaura a filha de Sião
+        </div>
+        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+    </div>
+
     <script>
-        function mostrar(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0,0);
+        function mostrarMusica(id) {
+            document.getElementById('telaInicio').style.display = 'none';
+            const paginas = document.querySelectorAll('.pagina-musica');
+            paginas.forEach(p => p.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+        function mostrarInicio() {
+            const paginas = document.querySelectorAll('.pagina-musica');
+            paginas.forEach(p => p.style.display = 'none');
+            document.getElementById('telaInicio').style.display = 'flex';
+            window.scrollTo(0, 0);
         }
     </script>
-
-    <!-- ====================================== -->
-    <!-- BOTÃO 1: COMO ANTIGAMENTE + VENTOS DO AVIVAMENTO -->
-    <!-- ====================================== -->
-    <div class="screen" id="m1-p1">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">1/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">COMO ANTIGAMENTE</h2>
-        <div class="lyrics">
-            Já faz tempo que eu não ouço sua voz<br>
-            Já faz tempo que eu não ouço sua oração<br>
-            Quanto tempo faz, que eu não te dou um louvor<br>
-            Ou uma pregação
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('inicio')">🏠</button>
-            <button class="nav-btn" onclick="mostrar('m1-p2')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p2">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">2/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">COMO ANTIGAMENTE</h2>
-        <div class="lyrics">
-            Aquela madrugada eu olhei pro seu quarto<br>
-            A porta estava fechada e você dormindo<br>
-            Sem falar de quando entrei naquele culto<br>
-            Mas você não estava ligado comigo
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p1')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p3')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p3">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">3/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">COMO ANTIGAMENTE</h2>
-        <div class="lyrics">
-            Quanto tempo faz que eu não posso te usar<br>
-            Quanto tempo faz que eu não posso te tocar<br>
-            Quanto tempo faz que eu não posso te abraçar<br>
-            O tempo está passando e você assim
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p2')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p4')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p4">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">4/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">COMO ANTIGAMENTE</h2>
-        <div class="lyrics">
-            Quantos hinos não pude te revelar<br>
-            Quantas revelações não pude confiar<br>
-            E das profundidades da minha palavra<br>
-            O tempo está passando e você assim
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p3')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p5')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p5">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">5/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">COMO ANTIGAMENTE</h2>
-        <div class="lyrics">
-            Eu quero no teu quarto te encontrar<br>
-            E como eu falava contigo falar<br>
-            Faz tanto tempo que você está assim<br>
-            Dentro da igreja e longe de mim
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p4')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p6')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p6">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">6/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">COMO ANTIGAMENTE</h2>
-        <div class="lyrics">
-            Mas hoje tenho uma palavra pra você<br>
-            Como uma brasa quero te acender<br>
-            E me encontrar no centro do teu coração<br>
-            Quero segurar a tua mão
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p5')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p7')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p7">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">7/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">COMO ANTIGAMENTE</h2>
-        <div class="lyrics">
-            Mas tudo só depende de você<br>
-            A decisão é tua então pode tomar<br>
-            Abra os seus braços e o coração<br>
-            Sinta agora eu te abraçar
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p6')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p8')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p8">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">8/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">VOLTA AO PRIMEIRO AMOR</h2>
-        <div class="lyrics">
-            Volta ao primeiro amor<br>
-            Volta ao primeiro amor<br>
-            Volta ao primeiro amor<br>
-            Quero te abraçar de novo
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p7')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p9')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p9">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">9/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">VOLTA AO PRIMEIRO AMOR</h2>
-        <div class="lyrics">
-            Volta ao primeiro amor<br>
-            Volta ao primeiro amor<br>
-            Volta ao primeiro amor<br>
-            Quero te fazer um vaso novo
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p8')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p10')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p10">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">10/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">SE TU VOLTAR</h2>
-        <div class="lyrics">
-            Se tu voltar, vou te tocar<br>
-            Se tu voltar, vou te usar<br>
-            Se tu voltar, vou revelar<br>
-            Os meus mistérios pra você<br><br>
-            Se tu voltar, eu vou te levantar<br>
-            Se tu voltar, eu vou te exaltar<br>
-            Se tu voltar eu vou te encher<br>
-            Como antigamente
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p9')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p11')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p11">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">11/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">VENTOS DO AVIVAMENTO</h2>
-        <div class="lyrics">
-            Oh faz chover, Senhor<br>
-            Águas que regem a terra<br>
-            Que façam brotar as sementes<br>
-            Dos frutos de um avivamento<br><br>
-            Oh faz chover, Senhor<br>
-            Atende o Teu povo que clama<br>
-            Que anseia por ver o Teu braço<br>
-            Agindo com poder e graça em nossa nação
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p10')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p12')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p12">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">12/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">VENTOS DO AVIVAMENTO</h2>
-        <div class="lyrics">
-            O meu coração tem anseio<br>
-            De ver Tua glória enchendo a terra<br>
-            Como as águas cobrem o mar<br><br>
-            De ver ser cumprindo na igreja<br>
-            A promessa que diz:<br>
-            "Aquele que crer,<br>
-            obras maiores ainda fará"
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="mostrar('m1-p11')">←</button>
-            <button class="nav-btn" onclick="mostrar('m1-p13')">→</button>
-        </div>
-    </div>
-
-    <div class="screen" id="m1-p13">
-        <div class="top-bar"><span class="name">BANDA KADOSH</span><span class="page-num">13/13</span></div>
-        <div class="divider"></div>
-        <h2 class="lyric-title">VENTOS DO AVIVAMENTO</h2>
-        <div class="lyrics">
-            O muito que nós temos visto<br>
-            Não passa de gotas<br>
-            Diante daquilo que pode e queres fazer<br><br>
-            Oh faz chover, Senhor<br>
-            Águas que regem a terra<br>
-            Que façam brotar as sementes<br>
-            Dos frutos de um avivamento<br><br>
-            Oh faz chover, Senhor<br>
-            Atende o Teu povo que clama<br>
-            Que anseio                        
+</body>
+</html>
