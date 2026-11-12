@@ -1,81 +1,50 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banda Kadosh | Louvorzão</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body {
-            background: #000;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            background: radial-gradient(ellipse at center, #2b0000 0%, #000 70%);
-        }
-        .inicio { text-align: center; animation: fadeIn 1.5s ease-in; }
-        h1 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 300; letter-spacing: 0.5rem; line-height: 1; }
-        .kadosh { color: #ff0000; text-shadow: 0 0 30px #ff000080; }
-        .louvorzao { font-size: 1.3rem; letter-spacing: 0.3rem; color: #ff0000; margin: 1.5rem 0 1rem; text-shadow: 0 0 15px #ff000060; }
-        .tema { font-size: 1rem; letter-spacing: 0.15rem; color: #999; margin-bottom: 0.5rem; }
-        .versiculo { font-size: 0.95rem; color: #666; margin-bottom: 3rem; font-style: italic; }
-        .botoes-musicas { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 3rem; }
-        .btn-musica {
-            background: transparent;
-            border: 2px solid #ff0000;
-            color: #ff0000;
-            padding: 1rem 2rem;
-            font-size: 0.95rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-musica:hover { background: #ff0000; color: #000; box-shadow: 0 0 20px #ff000080; }
-        .pagina-musica { display: none; text-align: center; max-width: 800px; width: 100%; }
-        .artista { color: #666; font-size: 1rem; margin-bottom: 2rem; }
-        .letra { white-space: pre-line; font-size: 1.05rem; line-height: 1.9; color: #ddd; margin: 2rem 0; }
-        .medley-titulo { color: #ff0000; font-size: 1.15rem; margin: 2.5rem 0 1rem; letter-spacing: 0.1rem; }
-        .btn-voltar {
-            background: transparent;
-            border: 1px solid #666;
-            color: #999;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 2rem;
-            transition: all 0.3s;
-        }
-        .btn-voltar:hover { border-color: #ff0000; color: #ff0000; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banda Kadosh | Louvorzão</title>
+<style>
+* {margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+body {background:#000;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;background:radial-gradient(ellipse at center,#2b0000 0%,#000 70%);}
+.inicio {text-align:center;animation:fadeIn 1.5s ease-in;}
+h1 {font-size:clamp(3rem,10vw,6rem);font-weight:300;letter-spacing:0.5rem;line-height:1;}
+.kadosh {color:#ff0000;text-shadow:0 0 30px #ff000080;}
+.louvorzao {font-size:1.3rem;letter-spacing:0.3rem;color:#ff0000;margin:1.5rem 0 1rem;text-shadow:0 0 15px #ff000060;}
+.tema {font-size:1rem;letter-spacing:0.15rem;color:#999;margin-bottom:0.5rem;}
+.versiculo {font-size:0.95rem;color:#666;margin-bottom:3rem;font-style:italic;}
+.botoes-musicas {display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:3rem;}
+.btn-musica {background:transparent;border:2px solid #ff0000;color:#ff0000;padding:1rem 2rem;font-size:0.95rem;border-radius:50px;cursor:pointer;transition:all 0.3s ease;}
+.btn-musica:hover {background:#ff0000;color:#000;box-shadow:0 0 20px #ff000080;}
+.pagina-musica {display:none;text-align:center;max-width:800px;width:100%;}
+.artista {color:#666;font-size:1rem;margin-bottom:2rem;}
+.letra {white-space:pre-line;font-size:1.05rem;line-height:1.9;color:#ddd;margin:2rem 0;}
+.medley-titulo {color:#ff0000;font-size:1.15rem;margin:2.5rem 0 1rem;letter-spacing:0.1rem;}
+.btn-voltar {background:transparent;border:1px solid #666;color:#999;padding:0.7rem 1.5rem;border-radius:50px;cursor:pointer;margin-top:2rem;transition:all 0.3s;}
+.btn-voltar:hover {border-color:#ff0000;color:#ff0000;}
+@keyframes fadeIn {from {opacity:0;transform:translateY(20px);} to {opacity:1;transform:translateY(0);}}
+</style>
 </head>
 <body>
 
-    <div id="telaInicio" class="inicio">
-        <h1>BANDA<br><span class="kadosh">KADOSH</span></h1>
-        <p class="louvorzao">LOUVORZÃO</p>
-        <p class="tema">"VINDE, E VOLTEMOS AO SENHOR"</p>
-        <p class="versiculo">Oséias 6:1-2</p>
-        <div class="botoes-musicas">
-            <button class="btn-musica" onclick="mostrarMusica('musica1')">🎵 O Senhor, Não os Ídolos</button>
-            <button class="btn-musica" onclick="mostrarMusica('musica2')">🎵 Eu Me Lembro</button>
-            <button class="btn-musica" onclick="mostrarMusica('musica3')">🎵 Há Um Vinho Novo</button>
-            <button class="btn-musica" onclick="mostrarMusica('musica4')">🎵 Como Antigamente + Ventos do Avivamento</button>
-            <button class="btn-musica" onclick="mostrarMusica('musica5')">🎵 Medley: De Volta + Bálsamo de Gileade</button>
-        </div>
-    </div>
+<div id="telaInicio" class="inicio">
+<h1>BANDA<br><span class="kadosh">KADOSH</span></h1>
+<p class="louvorzao">LOUVORZÃO</p>
+<p class="tema">"VINDE, E VOLTEMOS AO SENHOR"</p>
+<p class="versiculo">Oséias 6:1-2</p>
+<div class="botoes-musicas">
+<button class="btn-musica" onclick="mostrarMusica('musica1')">🎵 O Senhor, Não os Ídolos</button>
+<button class="btn-musica" onclick="mostrarMusica('musica2')">🎵 Eu Me Lembro</button>
+<button class="btn-musica" onclick="mostrarMusica('musica3')">🎵 Há Um Vinho Novo</button>
+<button class="btn-musica" onclick="mostrarMusica('musica4')">🎵 Como Antigamente + Ventos do Avivamento</button>
+<button class="btn-musica" onclick="mostrarMusica('musica5')">🎵 Medley: De Volta + Bálsamo de Gileade</button>
+</div>
+</div>
 
-    <div id="musica1" class="pagina-musica">
-        <h2 style="color:#ff0000; font-size:2rem;">O SENHOR, NÃO OS ÍDOLOS</h2>
-        <p class="artista">— Thamires García</p>
-        <div class="letra">
+<div id="musica1" class="pagina-musica">
+<h2 style="color:#ff0000;font-size:2rem;">O SENHOR, NÃO OS ÍDOLOS</h2>
+<p class="artista">— Thamires García</p>
+<div class="letra">
 Pecamos, Senhor
 O nosso coração está tão longe
 E estes nossos ídolos nos fizeram cegos como eles são
@@ -197,14 +166,14 @@ O Senhor, não os ídolos
 O Senhor, não os ídolos
 Só o Senhor, e não os ídolos
 O Senhor, e não os ídolos
-        </div>
-        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
-    </div>
+</div>
+<button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+</div>
 
-    <div id="musica2" class="pagina-musica">
-        <h2 style="color:#ff0000; font-size:2rem;">EU ME LEMBRO</h2>
-        <p class="artista">— Morada</p>
-        <div class="letra">
+<div id="musica2" class="pagina-musica">
+<h2 style="color:#ff0000;font-size:2rem;">EU ME LEMBRO</h2>
+<p class="artista">— Morada</p>
+<div class="letra">
 Eu me lembro quando a fome começou
 Eu me lembro quando Jesus me despertou
 Eu me lembro quando meu coração incendiou
@@ -245,14 +214,14 @@ Fogo em meus ossos
 Pá-para-pá
 Pá-para-pá
 pá-para-pá
-        </div>
-        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
-    </div>
+</div>
+<button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+</div>
 
-    <div id="musica3" class="pagina-musica">
-        <h2 style="color:#ff0000; font-size:2rem;">HÁ UM VINHO NOVO</h2>
-        <p class="artista">— Ministério Zoe</p>
-        <div class="letra">
+<div id="musica3" class="pagina-musica">
+<h2 style="color:#ff0000;font-size:2rem;">HÁ UM VINHO NOVO</h2>
+<p class="artista">— Ministério Zoe</p>
+<div class="letra">
 Já cantei uma canção de amor
 Já cantei uma canção da graça
 E por quê não cantar na dor,
@@ -281,16 +250,15 @@ Sobre odres que já foram rasgados,
 E agora são novos outra vez
 Há uma esperança pra cantar,
 Aquele que fez a ferida ligará
-        </div>
-        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
-    </div>
+</div>
+<button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+</div>
 
-    <div id="musica4" class="pagina-musica">
-        <h2 style="color:#ff0000; font-size:2rem;">COMO ANTIGAMENTE • VENTOS DO AVIVAMENTO</h2>
-        <p class="artista">Medley</p>
-        
-        <p class="medley-titulo">🎵 COMO ANTIGAMENTE</p>
-        <div class="letra">
+<div id="musica4" class="pagina-musica">
+<h2 style="color:#ff0000;font-size:2rem;">COMO ANTIGAMENTE • VENTOS DO AVIVAMENTO</h2>
+<p class="artista">Medley</p>
+<p class="medley-titulo">🎵 COMO ANTIGAMENTE</p>
+<div class="letra">
 Já faz tempo que eu não ouço sua voz
 Já faz tempo que eu não ouço sua oração
 Quando tempo faz, que eu não te dou um louvor
@@ -328,10 +296,9 @@ Os meus mistérios pra você
 Se tu voltar, eu vou te levantar
 Se tu voltar, eu vou te exaltar
 Se tu voltar eu vou te encher como antigamente
-        </div>
-        
-        <p class="medley-titulo">🎵 VENTOS DO AVIVAMENTO</p>
-        <div class="letra">
+</div>
+<p class="medley-titulo">🎵 VENTOS DO AVIVAMENTO</p>
+<div class="letra">
 Oh faz chover, Senhor
 Águas que regem a terra
 Que façam brotar as sementes
@@ -367,16 +334,15 @@ Atende o Teu povo que clama
 Que anseia por ver o Teu braço
 Agindo com poder e graça
 Em nossa nação
-        </div>
-        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
-    </div>
+</div>
+<button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+</div>
 
-    <div id="musica5" class="pagina-musica">
-        <h2 style="color:#ff0000; font-size:2rem;">MEDLEY</h2>
-        <p class="artista">De Volta • Jesus Meu Primeiro Amor • Voltemos ao Início • Bálsamo de Gileade</p>
-        
-        <p class="medley-titulo">🎵 DE VOLTA</p>
-        <div class="letra">
+<div id="musica5" class="pagina-musica">
+<h2 style="color:#ff0000;font-size:2rem;">MEDLEY</h2>
+<p class="artista">De Volta • Bálsamo de Gileade</p>
+<p class="medley-titulo">🎵 DE VOLTA</p>
+<div class="letra">
 Vinde, voltemos ao Senhor
 Pois Ele nos levou ao deserto
 Para nos lembrar
@@ -407,10 +373,9 @@ Vinde, voltemos ao Senhor
 Pois Ele nos despedaçou e nos sarará
 Fez a ferida e a ligará
 Nos revigorará e viveremos diante dEle
-        </div>
-        
-        <p class="medley-titulo">🎵 BÁLSAMO DE GILEADE</p>
-        <div class="letra">
+</div>
+<p class="medley-titulo">🎵 BÁLSAMO DE GILEADE</p>
+<div class="letra">
 Há um bálsamo em Gileade
 Há unção em Gileade
 Vem sobre mim para curar
@@ -430,24 +395,22 @@ Há um médico em Gileade
 Há remédio em Gileade
 Vem sobre mim para curar
 Restaura a filha de Sião
-        </div>
-        <button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
-    </div>
+</div>
+<button class="btn-voltar" onclick="mostrarInicio()">← Voltar</button>
+</div>
 
-    <script>
-        function mostrarMusica(id) {
-            document.getElementById('telaInicio').style.display = 'none';
-            const paginas = document.querySelectorAll('.pagina-musica');
-            paginas.forEach(p => p.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-            window.scrollTo(0, 0);
-        }
-        function mostrarInicio() {
-            const paginas = document.querySelectorAll('.pagina-musica');
-            paginas.forEach(p => p.style.display = 'none');
-            document.getElementById('telaInicio').style.display = 'flex';
-            window.scrollTo(0, 0);
-        }
-    </script>
+<script>
+function mostrarMusica(id){
+document.getElementById('telaInicio').style.display='none';
+document.querySelectorAll('.pagina-musica').forEach(p=>p.style.display='none');
+document.getElementById(id).style.display='block';
+window.scrollTo(0,0);
+}
+function mostrarInicio(){
+document.querySelectorAll('.pagina-musica').forEach(p=>p.style.display='none');
+document.getElementById('telaInicio').style.display='flex';
+window.scrollTo(0,0);
+}
+</script>
 </body>
 </html>
