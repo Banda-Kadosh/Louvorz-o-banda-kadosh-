@@ -3,421 +3,544 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Banda Kadosh | Louvorzão</title>
+<title>LOUVORZÃO — Banda Kadosh</title>
 <style>
 * {margin:0;padding:0;box-sizing:border-box;font-family:'Arial', sans-serif;}
-body {background:#000;color:#fff;min-height:100vh;overflow:hidden;}
+body {
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    overflow: hidden;
+}
 
 /* TELA INICIAL */
-.inicio {
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    width:100vw;
-    height:100vh;
-    background:radial-gradient(ellipse at center, #2b0000 0%, #000 70%);
-    position:absolute;
-    top:0;
-    left:0;
-    z-index:10;
+#tela-inicial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a0000, #000, #1a0000);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2rem;
+    text-align: center;
+    z-index: 100;
 }
-.inicio h1 {font-size:clamp(3rem,8vw,5rem);font-weight:bold;}
-.kadosh {color:#ff0000;text-shadow:0 0 30px #ff000060;}
-.titulo-evento {font-size:clamp(1.2rem,3vw,2rem);color:#ff0000;margin:1rem 0;}
-.tema {font-size:1rem;color:#ccc;}
-.versiculo {font-size:0.9rem;color:#777;margin-bottom:3rem;font-style:italic;}
-.botoes {display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;max-width:800px;width:90%;}
-.btn {
-    background:transparent;
-    border:2px solid #ff0000;
-    color:#ff0000;
-    padding:1rem;
-    font-size:1rem;
-    border-radius:6px;
-    cursor:pointer;
-    transition:0.3s;
+
+#tela-inicial h2 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: #ff6666;
+    margin-bottom: 0.3rem;
 }
-.btn:hover {background:#ff0000;color:#000;}
 
-/* ÁREA DE SLIDES */
-.musica-container {
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    width:100vw;
-    height:100vh;
-    background:linear-gradient(135deg, #0a0000, #000, #0a0000);
-    position:absolute;
-    top:0;
-    left:0;
-    padding:2rem;
-    text-align:center;
+#tela-inicial h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    color: #ff3333;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(255,51,51,0.3);
 }
-.musica-container.ativa {display:flex;}
 
-.slide {
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    height:100%;
+.tema {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: #ccc;
+    margin-bottom: 0.5rem;
 }
-.slide.visivel {display:flex;}
 
-.nome-musica {font-size:clamp(1.5rem,4vw,2.5rem);color:#ff3333;margin-bottom:0.5rem;}
-.artista {font-size:1rem;color:#777;margin-bottom:3rem;}
-.letra {font-size:clamp(1.2rem,3vw,2rem);line-height:2.2;color:#fff;max-width:800px;}
-.letra p {margin-bottom:0.8rem;}
+.versiculo {
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    color: #888;
+    margin-bottom: 3rem;
+    max-width: 600px;
+}
 
-/* NAVEGAÇÃO */
+#lista-musicas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+.btn-musica {
+    background: transparent;
+    border: 2px solid #ff3333;
+    color: #ff6666;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-musica:hover {
+    background: #ff3333;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255,51,51,0.4);
+}
+
+.btn-voltar {
+    position: fixed;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: transparent;
+    border: 2px solid #444;
+    color: #aaa;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 50;
+}
+
+.btn-voltar:hover {
+    border-color: #ff3333;
+    color: #ff3333;
+}
+
+/* TELA DE LETRA */
+.tela-musica {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0000, #000, #0a0000);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.titulo {
+    font-size: clamp(1.4rem, 4vw, 2.3rem);
+    color: #ff3333;
+    margin-bottom: 0.5rem;
+}
+
+.artista {
+    font-size: clamp(0.85rem, 1.5vw, 1rem);
+    color: #777;
+    margin-bottom: 2.5rem;
+}
+
+.letra {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    line-height: 2;
+    color: #fff;
+    max-width: 800px;
+}
+
+.letra p {
+    margin-bottom: 0.3rem;
+}
+
+.slide { display: none; }
+.slide.visivel { display: block; animation: aparecer 0.3s ease-out; }
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .nav {
-    position:fixed;
-    bottom:2rem;
-    left:0;
-    right:0;
-    display:flex;
-    justify-content:center;
-    gap:2rem;
+    position: fixed;
+    bottom: 2.5rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    z-index: 50;
 }
+
 .nav button {
-    background:transparent;
-    border:1px solid #444;
-    color:#aaa;
-    padding:0.7rem 1.5rem;
-    font-size:1rem;
-    border-radius:4px;
-    cursor:pointer;
-    transition:0.3s;
+    background: transparent;
+    border: 2px solid #444;
+    color: #aaa;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
 }
-.nav button:hover {border-color:#ff0000;color:#ff0000;}
-.voltar {
-    position:fixed;
-    top:1.5rem;
-    left:1.5rem;
-    background:transparent;
-    border:1px solid #333;
-    color:#888;
-    padding:0.5rem 1rem;
-    border-radius:4px;
-    cursor:pointer;
-    transition:0.3s;
+
+.nav button:hover {
+    border-color: #ff0000;
+    color: #ff0000;
 }
-.voltar:hover {border-color:#ff0000;color:#ff0000;}
-.contador {position:fixed;bottom:2.5rem;right:2rem;color:#555;font-size:0.9rem;}
+
+.contador {
+    position: fixed;
+    bottom: 3rem;
+    right: 2rem;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.escondido { display: none !important; }
 </style>
 </head>
 <body>
 
-<!-- ========== TELA INICIAL ========== -->
-<div id="inicio" class="inicio">
-    <h1>BANDA <span class="kadosh">KADOSH</span></h1>
-    <p class="titulo-evento">LOUVORZÃO</p>
-    <p class="tema">"VINDE, E VOLTEMOS AO SENHOR"</p>
-    <p class="versiculo">Oséias 6:1-2</p>
-    <div class="botoes">
-        <button class="btn" onclick="abrirMusica('m1')">🎵 O Senhor, Não os Ídolos</button>
-        <button class="btn" onclick="abrirMusica('m2')">🎵 Eu Me Lembro</button>
-        <button class="btn" onclick="abrirMusica('m3')">🎵 Há Um Vinho Novo</button>
-        <button class="btn" onclick="abrirMusica('m4')">🎵 Como Antigamente</button>
-        <button class="btn" onclick="abrirMusica('m5')">🎵 Ventos do Avivamento</button>
-        <button class="btn" onclick="abrirMusica('m6')">🎵 De Volta + Bálsamo de Gileade</button>
+<!-- ================== TELA INICIAL ================== -->
+<div id="tela-inicial">
+    <h2>BANDA KADOSH</h2>
+    <h1>🔥 LOUVORZÃO 🔥</h1>
+    <p class="tema">Tema: Vinde e Voltemos</p>
+    <p class="versiculo">Oséias 6:1-2 — "Vinde, voltemos ao Senhor... Ele nos feriu, mas nos sarará"</p>
+    
+    <div id="lista-musicas">
+        <button class="btn-musica" onclick="abrirMusica(1)">🎵 O Senhor, Não os Ídolos — Thamires Garcia</button>
+        <button class="btn-musica" onclick="abrirMusica(2)">🎵 Eu Me Lembro — Morada</button>
+        <button class="btn-musica" onclick="abrirMusica(3)">🎵 Há Um Vinho Novo — Ministério Zoe</button>
+        <button class="btn-musica" onclick="abrirMusica(4)">🎵 Como Antigamente + Ventos do Avivamento</button>
+        <button class="btn-musica" onclick="abrirMusica(5)">🎵 De Volta — Medley</button>
     </div>
 </div>
 
-<!-- ========== MÚSICA 1: O SENHOR, NÃO OS ÍDOLOS ========== -->
-<div id="m1" class="musica-container">
-    <button class="voltar" onclick="voltarInicio()">← Início</button>
-    <h2 class="nome-musica">O SENHOR, NÃO OS ÍDOLOS</h2>
-    <p class="artista">— Thamires García</p>
+<!-- ================== MÚSICA 1 ================== -->
+<div id="musica1" class="tela-musica escondido">
+    <button class="btn-voltar" onclick="voltarInicio()">← Início</button>
+    <h2 class="titulo">O SENHOR, NÃO OS ÍDOLOS</h2>
+    <p class="artista">— Thamires Garcia</p>
 
-    <!-- Slide 1 -->
-    <div class="slide visivel" id="m1s1">
-        <div class="letra">
-            <p>Pecamos, Senhor</p>
-            <p>O nosso coração está tão longe</p>
-            <p>E estes nossos ídolos</p>
-            <p>Nos fizeram cegos como eles são</p>
-        </div>
-    </div>
-    <!-- Slide 2 -->
-    <div class="slide" id="m1s2">
-        <div class="letra">
-            <p>Faz de novo o povo saber</p>
-            <p>Que além de Ti</p>
-            <p>Não há mais nenhum Deus</p>
-        </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" id="m1s3">
-        <div class="letra">
-            <p>Quem mais poderia dizer</p>
-            <p>Aquilo que vai acontecer no futuro?</p>
-            <p>Quem mais poderia fazer</p>
-            <p>Aquilo que se fez desde os tempos antigos?</p>
-        </div>
-    </div>
-    <!-- Slide 4 -->
-    <div class="slide" id="m1s4">
-        <div class="letra">
-            <p>O Senhor, e não os ídolos</p>
-            <p>Só o Senhor, e não os ídolos</p>
-        </div>
-    </div>
+<div class="slide visivel" id="m1s1"><div class="letra">
+<p>Pecamos, Senhor</p>
+<p>O nosso coração está tão longe</p>
+<br>
+<p>E estes nossos ídolos</p>
+<p>Nos fizeram cegos como eles são</p>
+</div></div>
+<div class="slide" id="m1s2"><div class="letra">
+<p>Faz de novo o povo saber</p>
+<p>Que além de Ti</p>
+<p>Não há mais nenhum Deus</p>
+</div></div>
+<div class="slide" id="m1s3"><div class="letra">
+<p>Quem mais poderia dizer</p>
+<p>Aquilo que vai acontecer no futuro?</p>
+<br>
+<p>Quem mais poderia fazer</p>
+<p>Aquilo que se fez desde os tempos antigos?</p>
+</div></div>
+<div class="slide" id="m1s4"><div class="letra">
+<p>O Senhor, e não os ídolos</p>
+<p>O Senhor, e não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s5"><div class="letra">
+<p>Quem mais poderia dizer</p>
+<p>Aquilo que vai acontecer no futuro?</p>
+<br>
+<p>Quem mais poderia fazer</p>
+<p>Aquilo que se fez desde os tempos antigos?</p>
+</div></div>
+<div class="slide" id="m1s6"><div class="letra">
+<p>Só o Senhor, e não os ídolos</p>
+<p>O Senhor, e não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s7"><div class="letra">
+<p>É como está escrito</p>
+<p>Assim diz o Senhor:</p>
+<br>
+<p>"Eu me lembro de você, meu povo</p>
+<p>Da sua afeição quando você era jovem"</p>
+</div></div>
+<div class="slide" id="m1s8"><div class="letra">
+<p>"Do seu amor quando noiva</p>
+<p>E de como você me seguia no deserto</p>
+<p>Numa terra em que não se semeia"</p>
+</div></div>
+<div class="slide" id="m1s9"><div class="letra">
+<p>Escutem a palavra do Senhor:</p>
+<p>Que injustiça seus pais acharam em Mim</p>
+<p>Para que se afastassem assim?</p>
+</div></div>
+<div class="slide" id="m1s10"><div class="letra">
+<p>Seguindo ídolos sem valor</p>
+<p>E tornando-se como eles?</p>
+<p>Ninguém perguntou por Mim!</p>
+</div></div>
+<div class="slide" id="m1s11"><div class="letra">
+<p>Os sacerdotes não disseram:</p>
+<p>"Onde está o Senhor?"</p>
+<br>
+<p>Os que tratavam da lei não Me conheceram</p>
+</div></div>
+<div class="slide" id="m1s12"><div class="letra">
+<p>Os pastores se revoltaram contra Mim</p>
+<p>Os profetas profetizaram por Baal</p>
+<br>
+<p>E o Meu povo trocou a sua glória</p>
+<p>Por aquilo que não tem proveito algum</p>
+</div></div>
+<div class="slide" id="m1s13"><div class="letra">
+<p>E cometeu dois males:</p>
+<br>
+<p>A Mim Me abandonaram,</p>
+<p>Fonte de Águas Vivas</p>
+<br>
+<p>E cavaram cisternas rachadas!</p>
+</div></div>
+<div class="slide" id="m1s14"><div class="letra">
+<p>Oh, geração</p>
+<p>Considere a palavra do Senhor!</p>
+<br>
+<p>Será que Eu tenho sido um deserto pra vocês?</p>
+</div></div>
+<div class="slide" id="m1s15"><div class="letra">
+<p>Então, por que vocês dizem:</p>
+<p>"Somos livres pra fazer o que quisermos"?</p>
+</div></div>
+<div class="slide" id="m1s16"><div class="letra">
+<p>Mas reconhece agora que você transgrediu</p>
+<p>Contra o Senhor</p>
+<br>
+<p>E se prostituiu com estranhos</p>
+<p>E não deu ouvidos à Minha voz</p>
+</div></div>
+<div class="slide" id="m1s17"><div class="letra">
+<p>Volte pra Mim, Meu povo</p>
+<p>Voltem, filhos!</p>
+<br>
+<p>Voltem! E Eu os levarei a Sião</p>
+</div></div>
+<div class="slide" id="m1s18"><div class="letra">
+<p>Derruba os amores rivais</p>
+<p>Expõe todos esses amantes</p>
+<br>
+<p>E traz o nosso coração de volta</p>
+<p>Ao dia do primeiro amor</p>
+</div></div>
+<div class="slide" id="m1s19"><div class="letra">
+<p>Pois é como está escrito:</p>
+<p>"Eu Me lembro bem", diz o Senhor</p>
+<br>
+<p>"De quando você era noiva</p>
+<p>E Me seguia pelo deserto"</p>
+</div></div>
+<div class="slide" id="m1s20"><div class="letra">
+<p>Ah, Eu sei!</p>
+<p>Ah, Eu sei que o Senhor se lembra</p>
+<br>
+<p>Dos dias do primeiro amor da Sua igreja</p>
+<p>Eu sei que estás chamando a Tua amada de novo</p>
+</div></div>
+<div class="slide" id="m1s21"><div class="letra">
+<p>Quem mais poderia dizer?</p>
+<p>Quem mais poderia dizer</p>
+<p>Aquilo que vai acontecer no futuro?</p>
+</div></div>
+<div class="slide" id="m1s22"><div class="letra">
+<p>Quem mais poderia fazer</p>
+<p>Aquilo que se fez desde os tempos antigos?</p>
+<br>
+<p>O Senhor, e não os ídolos</p>
+<p>Só o Senhor, e não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s23"><div class="letra">
+<p>O Senhor, não os ídolos</p>
+<p>O Senhor, não os ídolos</p>
+<p>O Senhor, não os ídolos</p>
+<p>O Senhor, não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s24"><div class="letra">
+<p>Só o Senhor, e não os ídolos</p>
+<p>O Senhor, e não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s25"><div class="letra">
+<p>E nós declaramos a nossa devoção para sempre</p>
+</div></div>
+<div class="slide" id="m1s26"><div class="letra">
+<p>O Senhor, não os ídolos</p>
+<p>O Senhor, não os ídolos</p>
+<p>O Senhor, não os ídolos — Tu serás o primeiro</p>
+</div></div>
+<div class="slide" id="m1s27"><div class="letra">
+<p>O Senhor, não os ídolos</p>
+<p>Só o Senhor, e não os ídolos</p>
+<p>O Senhor, e não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s28"><div class="letra">
+<p>Eles têm boca e não falam</p>
+<p>Têm olhos e não veem</p>
+</div></div>
+<div class="slide" id="m1s29"><div class="letra">
+<p>Têm mãos e não apalpam</p>
+<p>Têm pés e não caminham</p>
+</div></div>
+<div class="slide" id="m1s30"><div class="letra">
+<p>Só o Senhor é Deus, não os ídolos</p>
+<p>O Senhor, não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s31"><div class="letra">
+<p>Eles têm boca e não podem falar, Senhor</p>
+<p>Eles têm boca e não falam</p>
+</div></div>
+<div class="slide" id="m1s32"><div class="letra">
+<p>Têm olhos e não veem</p>
+<p>Têm mãos e não apalpam</p>
+<p>Têm pés e não caminham</p>
+</div></div>
+<div class="slide" id="m1s33"><div class="letra">
+<p>Só o Senhor é Deus, não os ídolos</p>
+<p>O Senhor, e não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s34"><div class="letra">
+<p>O Senhor, mais ninguém</p>
+<p>O Senhor, só o Senhor</p>
+<p>Diga a Ele:</p>
+</div></div>
+<div class="slide" id="m1s35"><div class="letra">
+<p>O Senhor, não os ídolos</p>
+<p>O Senhor, não os ídolos</p>
+<p>O Senhor, não os ídolos</p>
+</div></div>
+<div class="slide" id="m1s36"><div class="letra">
+<p>O Senhor, não os ídolos</p>
+<p>Só o Senhor, e não os ídolos</p>
+<p>O Senhor, e não os ídolos</p>
+</div></div>
 
     <div class="nav">
-        <button onclick="slideAnterior('m1', 4)">◀ Anterior</button>
-        <button onclick="slideProximo('m1', 4)">Próximo ▶</button>
+        <button onclick="anteriorSlide()">◀ Anterior</button>
+        <button onclick="proximoSlide()">Próximo ▶</button>
     </div>
-    <p class="contador" id="m1contador">1 / 4</p>
+    <p class="contador" id="contador1">1 / 36</p>
 </div>
 
-<!-- ========== MÚSICA 2: EU ME LEMBRO ========== -->
-<div id="m2" class="musica-container">
-    <button class="voltar" onclick="voltarInicio()">← Início</button>
-    <h2 class="nome-musica">EU ME LEMBRO</h2>
+<!-- ================== MÚSICA 2 ================== -->
+<div id="musica2" class="tela-musica escondido">
+    <button class="btn-voltar" onclick="voltarInicio()">← Início</button>
+    <h2 class="titulo">EU ME LEMBRO</h2>
     <p class="artista">— Morada</p>
 
-    <!-- Slide 1 -->
-    <div class="slide visivel" id="m2s1">
-        <div class="letra">
-            <p>Eu me lembro quando a fome começou</p>
-            <p>Eu me lembro quando Jesus me despertou</p>
-            <p>Eu me lembro quando meu coração incendiou</p>
-        </div>
-    </div>
-    <!-- Slide 2 -->
-    <div class="slide" id="m2s2">
-        <div class="letra">
-            <p>Era uma presença que eu não conhecia</p>
-            <p>Uma revelação que eu ainda não tinha</p>
-            <p>Era como fogo que não se apagava</p>
-        </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" id="m2s3">
-        <div class="letra">
-            <p>Grato pela vida</p>
-            <p>Grato pela história</p>
-            <p>Mas quero mais do Teu fogo</p>
-        </div>
-    </div>
+<div class="slide visivel" id="m2s1"><div class="letra">
+<p>Eu me lembro quando a fome começou</p>
+<p>Eu me lembro quando Jesus me despertou</p>
+<br>
+<p>Eu me lembro quando meu coração incendiou</p>
+</div></div>
+<div class="slide" id="m2s2"><div class="letra">
+<p>Eu me lembro quando a fome começou</p>
+<p>Eu me lembro quando Jesus me despertou</p>
+<br>
+<p>Eu me lembro quando meu coração incendiou</p>
+</div></div>
+<div class="slide" id="m2s3"><div class="letra">
+<p>Eu me lembro quando a fome começou</p>
+<p>Eu me lembro quando Jesus me despertou</p>
+<br>
+<p>Eu me lembro quando meu coração incendiou</p>
+</div></div>
+<div class="slide" id="m2s4"><div class="letra">
+<p>Era uma presença que eu não conhecia</p>
+<p>Uma revelação que eu ainda não tinha</p>
+<br>
+<p>O tempo passava e eu nem percebia</p>
+<p>Era como fogo que não se apagava</p>
+</div></div>
+<div class="slide" id="m2s5"><div class="letra">
+<p>Era uma presença que eu não conhecia</p>
+<p>Uma revelação que eu ainda não tinha</p>
+<br>
+<p>O tempo passava e eu nem percebia</p>
+<p>Era como fogo que não se apagava</p>
+</div></div>
+<div class="slide" id="m2s6"><div class="letra">
+<p>Grato pela vida</p>
+<p>Grato pela história</p>
+<br>
+<p>Por tudo que provei e vi</p>
+<p>E experimentei em Ti</p>
+</div></div>
+<div class="slide" id="m2s7"><div class="letra">
+<p>Mas o intenso desejo</p>
+<p>Arde em meu peito</p>
+<br>
+<p>Não quero só lembrar do fogo</p>
+<p>Há mais da Tua glória me chamando</p>
+</div></div>
+<div class="slide" id="m2s8"><div class="letra">
+<p>Fome dos primeiros dias</p>
+<p>Sede dos primeiros dias</p>
+<br>
+<p>Estou voltando ao primeiro amor</p>
+<p>Ao coração de quando me encontrou</p>
+</div></div>
+<div class="slide" id="m2s9"><div class="letra">
+<p>Fome dos primeiros dias</p>
+<p>Sede dos primeiros dias</p>
+<br>
+<p>Estou voltando ao primeiro amor</p>
+<p>Ao coração de quando me encontrou</p>
+</div></div>
+<div class="slide" id="m2s10"><div class="letra">
+<p>Fome dos primeiros dias</p>
+<p>Sede dos primeiros dias</p>
+<br>
+<p>Estou voltando ao primeiro amor</p>
+<p>Ao coração de quando me encontrou</p>
+</div></div>
+<div class="slide" id="m2s11"><div class="letra">
+<p>Nós somos gratos</p>
+<br>
+<p>Grato pela vida</p>
+<p>Grato pela história</p>
+</div></div>
+<div class="slide" id="m2s12"><div class="letra">
+<p>Por tudo que provei e vi</p>
+<p>E experimentei em Ti</p>
+<br>
+<p>Mas o intenso desejo</p>
+<p>Arde em meu peito</p>
+</div></div>
+<div class="slide" id="m2s13"><div class="letra">
+<p>Não quero só lembrar do fogo</p>
+<p>Há mais da Tua glória me chamando</p>
+<br>
+<p>E ela está me chamando</p>
+<p>E eu vou</p>
+</div></div>
+<div class="slide" id="m2s14"><div class="letra">
+<p>Dá-me mais do Seu óleo</p>
+<p>Dá-me mais do Seu rio</p>
+<br>
+<p>Lágrimas nos olhos</p>
+<p>Sede da presença</p>
+</div></div>
+<div class="slide" id="m2s15"><div class="letra">
+<p>Dá-me mais do Teu vinho</p>
+<p>Dá-me mais do pão vivo</p>
+<br>
+<p>Fogo em meus ossos</p>
+<p>Óleo de alegria</p>
+</div></div>
+<div class="slide" id="m2s16"><div class="letra">
+<p>Dá-me mais do Seu óleo</p>
+<p>Dá-me mais do Seu rio</p>
+<br>
+<p>Lágrimas nos olhos</p>
+<p>Sede da presença</p>
+</div></div>
+<div class="slide" id="m2s17"><div class="letra">
+<p>Dá-me mais do Teu vinho</p>
+<p>Dá-me mais do pão vivo</p>
+<br>
+<p>Fogo em meus ossos</p>
+<p>Óleo de alegria</p>
+</div></div>
+<div class="slide" id="m2s18"><div class="letra">
+<p>Pá-para-pá</p>
+<p>Pá-para-pá</p>
+</div></div>
 
     <div class="nav">
-        <button onclick="slideAnterior('m2', 3)">◀ Anterior</button>
-        <button onclick="slideProximo('m2', 3)">Próximo ▶</button>
+        <button onclick="anteriorSlide()">◀ Anterior</button>
+        <button onclick="proximoSlide()">Próximo ▶</button>
     </div>
-    <p class="contador" id="m2contador">1 / 3</p>
-</div>
-
-<!-- ========== MÚSICA 3: HÁ UM VINHO NOVO ========== -->
-<div id="m3" class="musica-container">
-    <button class="voltar" onclick="voltarInicio()">← Início</button>
-    <h2 class="nome-musica">HÁ UM VINHO NOVO</h2>
-    <p class="artista">— Ministério Zoe</p>
-
-    <!-- Slide 1 -->
-    <div class="slide visivel" id="m3s1">
-        <div class="letra">
-            <p>Já cantei uma canção de amor</p>
-            <p>Já cantei uma canção da graça</p>
-            <p>E por quê não cantar na dor?</p>
-        </div>
-    </div>
-    <!-- Slide 2 -->
-    <div class="slide" id="m3s2">
-        <div class="letra">
-            <p>Há um vinho novo pra descer</p>
-            <p>Sobre odres que já foram rasgados</p>
-            <p>E agora são novos outra vez</p>
-        </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" id="m3s3">
-        <div class="letra">
-            <p>O choro pode durar uma noite</p>
-            <p>A alegria vem com a manhã</p>
-        </div>
-    </div>
-
-    <div class="nav">
-        <button onclick="slideAnterior('m3', 3)">◀ Anterior</button>
-        <button onclick="slideProximo('m3', 3)">Próximo ▶</button>
-    </div>
-    <p class="contador" id="m3contador">1 / 3</p>
-</div>
-
-<!-- ========== MÚSICA 4: COMO ANTIGAMENTE ========== -->
-<div id="m4" class="musica-container">
-    <button class="voltar" onclick="voltarInicio()">← Início</button>
-    <h2 class="nome-musica">COMO ANTIGAMENTE</h2>
-    <p class="artista">Medley</p>
-
-    <!-- Slide 1 -->
-    <div class="slide visivel" id="m4s1">
-        <div class="letra">
-            <p>Já faz tempo que eu não ouço Tua voz</p>
-            <p>Já faz tempo que eu não ouço Tua oração</p>
-        </div>
-    </div>
-    <!-- Slide 2 -->
-    <div class="slide" id="m4s2">
-        <div class="letra">
-            <p>Quantas noites passaram</p>
-            <p>Sem eu Te buscar de verdade</p>
-        </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" id="m4s3">
-        <div class="letra">
-            <p>Volta ao primeiro amor</p>
-            <p>Como antigamente</p>
-        </div>
-    </div>
-
-    <div class="nav">
-        <button onclick="slideAnterior('m4', 3)">◀ Anterior</button>
-        <button onclick="slideProximo('m4', 3)">Próximo ▶</button>
-    </div>
-    <p class="contador" id="m4contador">1 / 3</p>
-</div>
-
-<!-- ========== MÚSICA 5: VENTOS DO AVIVAMENTO ========== -->
-<div id="m5" class="musica-container">
-    <button class="voltar" onclick="voltarInicio()">← Início</button>
-    <h2 class="nome-musica">VENTOS DO AVIVAMENTO</h2>
-    <p class="artista">Medley</p>
-
-    <!-- Slide 1 -->
-    <div class="slide visivel" id="m5s1">
-        <div class="letra">
-            <p>Oh faz chover, Senhor</p>
-            <p>Águas que regem a terra</p>
-        </div>
-    </div>
-    <!-- Slide 2 -->
-    <div class="slide" id="m5s2">
-        <div class="letra">
-            <p>Que façam brotar as sementes</p>
-            <p>Dos frutos de um avivamento</p>
-        </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" id="m5s3">
-        <div class="letra">
-            <p>Atende o Teu povo que clama</p>
-            <p>Agindo com poder e graça</p>
-        </div>
-    </div>
-
-    <div class="nav">
-        <button onclick="slideAnterior('m5', 3)">◀ Anterior</button>
-        <button onclick="slideProximo('m5', 3)">Próximo ▶</button>
-    </div>
-    <p class="contador" id="m5contador">1 / 3</p>
-</div>
-
-<!-- ========== MÚSICA 6: DE VOLTA + BÁLSAMO ========== -->
-<div id="m6" class="musica-container">
-    <button class="voltar" onclick="voltarInicio()">← Início</button>
-    <h2 class="nome-musica">DE VOLTA • BÁLSAMO DE GILEADE</h2>
-    <p class="artista">Medley</p>
-
-    <!-- Slide 1 -->
-    <div class="slide visivel" id="m6s1">
-        <div class="letra">
-            <p>Vinde, voltemos ao Senhor</p>
-            <p>Pois Ele nos levou ao deserto</p>
-        </div>
-    </div>
-    <!-- Slide 2 -->
-    <div class="slide" id="m6s2">
-        <div class="letra">
-            <p>Para nos lembrar</p>
-            <p>Do primeiro amor</p>
-        </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" id="m6s3">
-        <div class="letra">
-            <p>Há um bálsamo em Gileade</p>
-            <p>Vem sobre mim para curar</p>
-        </div>
-    </div>
-
-    <div class="nav">
-        <button onclick="slideAnterior('m6', 3)">◀ Anterior</button>
-        <button onclick="slideProximo('m6', 3)">Próximo ▶</button>
-    </div>
-    <p class="contador" id="m6contador">1 / 3</p>
-</div>
-
-<script>
-let musicaAtual = null;
-let slideAtual = 1;
-let totalSlides = 1;
-
-function abrirMusica(id) {
-    musicaAtual = id;
-    slideAtual = 1;
-    document.getElementById('inicio').style.display = 'none';
-    document.getElementById(id).classList.add('ativa');
-    // Mostra só o primeiro slide
-    for(let i=1; i<=10; i++) {
-        const s = document.getElementById(id+'s'+i);
-        if(s) {
-            s.classList.remove('visivel');
-            if(i===1) s.classList.add('visivel');
-        }
-    }
-    atualizarContador();
-}
-
-function fecharMusica(id) {
-    document.getElementById(id).classList.remove('ativa');
-}
-
-function voltarInicio() {
-    if(musicaAtual) {
-        fecharMusica(musicaAtual);
-        musicaAtual = null;
-        slideAtual = 1;
-    }
-    document.getElementById('inicio').style.display = 'flex';
-}
-
-function slideProximo(musica, total) {
-    totalSlides = total;
-    document.getElementById(musica+'s'+slideAtual).classList.remove('visivel');
-    if(slideAtual < total) {
-        slideAtual++;
-    } else {
-        slideAtual = 1; // volta pro primeiro
-    }
-    document.getElementById(musica+'s'+slideAtual).classList.add('visivel');
-    atualizarContador();
-}
-
-function slideAnterior(musica, total) {
-    totalSlides = total;
-    document.getElementById(musica+'s'+slideAtual).classList.remove('visivel');
-    if(slideAtual > 1) {
-        slideAtual--;
-    } else {
-        slideAtual = total; // vai pro último
-    }
-    document.getElementById(musica+'s'+slideAtual).classList.add('visivel');
-    atualizarContador();
-}
-
-function atualizarContador() {
-    if(musicaAtual && totalSlides) {
-        document.getElementById(musicaAtual+'contador').textContent = slideAtual + ' / ' + totalSlides;
-    }
-}
-</script>
-
-</body>
-</html>
