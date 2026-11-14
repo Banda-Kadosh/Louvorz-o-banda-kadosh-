@@ -1,272 +1,261 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LOUVORZÃO — Banda Kadosh</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#000;color:#fff;font-family:Arial,sans-serif;}
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 30px;
+}
 
-/* TELA INICIAL */
-#inicio{display:block;width:100%;min-height:100vh;padding:2rem;text-align:center;}
-#inicio h2{color:#ff6666;font-size:1.8rem;margin-bottom:0.5rem;}
-#inicio h1{color:#ff3333;font-size:2.5rem;margin-bottom:1rem;}
-#inicio .tema{color:#ccc;margin-bottom:0.5rem;font-size:1.2rem;}
-#inicio .versiculo{color:#888;margin-bottom:3rem;max-width:550px;margin:0 auto 3rem;line-height:1.6;}
+h2 { color: #ff6666; font-size: 22px; margin: 0 0 10px; }
+h1 { color: #ff3333; font-size: 36px; margin: 0 0 15px; }
+.tema { color: #ccc; font-size: 18px; margin-bottom: 40px; }
 
-/* BOTÕES DOIS LADO A LADO */
-.botoes-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:700px;margin:0 auto;padding:0 1rem;}
-.btn{display:flex;align-items:center;justify-content:center;color:#ff3333;border:3px solid #ff3333;padding:1.2rem 1rem;border-radius:10px;font-size:1rem;font-weight:bold;cursor:pointer;min-height:80px;}
-.btn:active{background:#ff3333;color:#fff;}
+.botoes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  max-width: 700px;
+  margin: 0 auto;
+}
 
-/* TELA DE MÚSICA */
-.tela-musica{display:none;width:100%;min-height:100vh;padding:2rem;text-align:center;}
-.voltar{display:inline-block;color:#aaa;text-decoration:none;font-size:1.1rem;margin-bottom:2rem;cursor:pointer;}
-.titulo{color:#ff3333;font-size:2rem;margin-bottom:0.5rem;}
-.artista{color:#888;margin-bottom:3rem;font-size:1.2rem;}
+.botao {
+  border: 3px solid #ff3333;
+  color: #ff3333;
+  background: transparent;
+  padding: 18px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
 
-.slide{display:none;}
-.slide.visivel{display:block;}
+.botao:active {
+  background: #ff3333;
+  color: #fff;
+}
 
-.letra{font-size:1.6rem;line-height:1.8;max-width:700px;margin:3rem auto 5rem;min-height:300px;display:flex;flex-direction:column;justify-content:center;}
-.letra p{margin-bottom:0.5rem;}
+.pagina { display: none; }
+.pagina.ativa { display: block; }
 
-.nav{position:fixed;bottom:2rem;left:0;right:0;text-align:center;}
-.nav button{background:transparent;border:2px solid #ff3333;color:#ff3333;padding:0.8rem 2rem;font-size:1.1rem;border-radius:6px;margin:0 0.5rem;cursor:pointer;font-weight:bold;}
-.nav button:active{background:#ff3333;color:#fff;}
+.letra {
+  font-size: 26px;
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 60px auto 120px;
+  min-height: 200px;
+}
 
-.escondido{display:none !important;}
+.navegacao {
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+}
+
+.voltar {
+  color: #aaa;
+  text-decoration: none;
+  font-size: 18px;
+  display: inline-block;
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+.oculto { display: none !important; }
 </style>
 </head>
 <body>
 
-<!-- ========== TELA INICIAL ========== -->
-<div id="inicio">
-    <h2>BANDA KADOSH</h2>
-    <h1>🔥 LOUVORZÃO 🔥</h1>
-    <p class="tema">Tema: Vinde e Voltemos</p>
-    <p class="versiculo">Oséias 6:1-2 — "Vinde, voltemos ao Senhor..."</p>
+<!-- ===== TELA INICIAL ===== -->
+<div id="inicio" class="pagina ativa">
+  <h2>BANDA KADOSH</h2>
+  <h1>🔥 LOUVORZÃO 🔥</h1>
+  <p class="tema">Tema: Vinde e Voltemos — Oséias 6:1-2</p>
 
-    <div class="botoes-grid">
-        <button class="btn" onclick="abrirMusica(1)">🎵 O Senhor, Não os Ídolos — Thamires Garcia</button>
-        <button class="btn" onclick="abrirMusica(2)">🎵 Eu Me Lembro — Morada</button>
-        <button class="btn" onclick="abrirMusica(3)">🎵 Há Um Vinho Novo — Ministério Zoe</button>
-        <button class="btn" onclick="abrirMusica(4)">🎵 Como Antigamente</button>
-        <button class="btn" onclick="abrirMusica(5)">🎵 De Volta — Medley</button>
-    </div>
+  <div class="botoes-grid">
+    <button class="botao" onclick="abrirMusica(1)">🎵 O Senhor, Não os Ídolos</button>
+    <button class="botao" onclick="abrirMusica(2)">🎵 Eu Me Lembro</button>
+    <button class="botao" onclick="abrirMusica(3)">🎵 Há Um Vinho Novo</button>
+    <button class="botao" onclick="abrirMusica(4)">🎵 Como Antigamente</button>
+    <button class="botao" onclick="abrirMusica(5)">🎵 De Volta</button>
+  </div>
 </div>
 
-<!-- ========== MÚSICA 1 ========== -->
-<div id="musica1" class="tela-musica escondido">
-    <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
-    <h2 class="titulo">O SENHOR, NÃO OS ÍDOLOS</h2>
-    <p class="artista">— Thamires Garcia</p>
+<!-- ===== MÚSICA 1 ===== -->
+<div id="musica1" class="pagina oculto">
+  <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
+  <h2 style="color:#ff3333; font-size:28px;">O SENHOR, NÃO OS ÍDOLOS</h2>
+  <p style="color:#888; margin-bottom:30px;">— Thamires Garcia</p>
 
-    <div class="slide visivel" id="m1s1"><div class="letra">
+  <div id="m1s1" class="letra">
     <p>Pecamos, Senhor</p>
     <p>O nosso coração está tão longe</p>
-    </div></div>
-    <div class="slide" id="m1s2"><div class="letra">
+  </div>
+  <div id="m1s2" class="letra oculto">
     <p>E estes nossos ídolos</p>
     <p>Nos fizeram cegos como eles são</p>
-    </div></div>
-    <div class="slide" id="m1s3"><div class="letra">
+  </div>
+  <div id="m1s3" class="letra oculto">
     <p>Faz de novo o povo saber</p>
     <p>Que além de Ti não há mais nenhum Deus</p>
-    </div></div>
-    <div class="slide" id="m1s4"><div class="letra">
-    <p>Quem mais poderia dizer</p>
-    <p>Aquilo que vai acontecer no futuro?</p>
-    </div></div>
-    <div class="slide" id="m1s5"><div class="letra">
+  </div>
+  <div id="m1s4" class="letra oculto">
     <p>O Senhor, e não os ídolos</p>
     <p>O Senhor, e não os ídolos</p>
-    </div></div>
-    <div class="slide" id="m1s6"><div class="letra">
-    <p>Só o Senhor, e não os ídolos</p>
-    <p>O Senhor, e não os ídolos</p>
-    </div></div>
+  </div>
 
-    <div class="nav">
-        <button onclick="anteriorSlide()">◀ Anterior</button>
-        <button onclick="proximoSlide()">Próximo ▶</button>
-    </div>
+  <div class="navegacao">
+    <button class="botao" style="width:120px;" onclick="anteriorSlide()">◀ Anterior</button>
+    <button class="botao" style="width:120px;" onclick="proximoSlide()">Próximo ▶</button>
+  </div>
 </div>
 
-<!-- ========== MÚSICA 2 ========== -->
-<div id="musica2" class="tela-musica escondido">
-    <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
-    <h2 class="titulo">EU ME LEMBRO</h2>
-    <p class="artista">— Morada</p>
+<!-- ===== MÚSICA 2 ===== -->
+<div id="musica2" class="pagina oculto">
+  <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
+  <h2 style="color:#ff3333; font-size:28px;">EU ME LEMBRO</h2>
+  <p style="color:#888; margin-bottom:30px;">— Morada</p>
 
-    <div class="slide visivel" id="m2s1"><div class="letra">
+  <div id="m2s1" class="letra">
     <p>Eu me lembro quando a fome começou</p>
     <p>Eu me lembro quando Jesus me despertou</p>
-    </div></div>
-    <div class="slide" id="m2s2"><div class="letra">
+  </div>
+  <div id="m2s2" class="letra oculto">
     <p>Eu me lembro quando meu coração incendiou</p>
-    </div></div>
-    <div class="slide" id="m2s3"><div class="letra">
+  </div>
+  <div id="m2s3" class="letra oculto">
     <p>Era uma presença que eu não conhecia</p>
     <p>Uma revelação que eu ainda não tinha</p>
-    </div></div>
-    <div class="slide" id="m2s4"><div class="letra">
-    <p>O tempo passava e eu nem percebia</p>
-    <p>Era como fogo que não se apagava</p>
-    </div></div>
-    <div class="slide" id="m2s5"><div class="letra">
-    <p>Grato pela vida, grato pela história</p>
-    <p>Por tudo que provei e vi em Ti</p>
-    </div></div>
+  </div>
 
-    <div class="nav">
-        <button onclick="anteriorSlide()">◀ Anterior</button>
-        <button onclick="proximoSlide()">Próximo ▶</button>
-    </div>
+  <div class="navegacao">
+    <button class="botao" style="width:120px;" onclick="anteriorSlide()">◀ Anterior</button>
+    <button class="botao" style="width:120px;" onclick="proximoSlide()">Próximo ▶</button>
+  </div>
 </div>
 
-<!-- ========== MÚSICA 3 ========== -->
-<div id="musica3" class="tela-musica escondido">
-    <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
-    <h2 class="titulo">HÁ UM VINHO NOVO</h2>
-    <p class="artista">— Ministério Zoe</p>
+<!-- ===== MÚSICA 3 ===== -->
+<div id="musica3" class="pagina oculto">
+  <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
+  <h2 style="color:#ff3333; font-size:28px;">HÁ UM VINHO NOVO</h2>
+  <p style="color:#888; margin-bottom:30px;">— Ministério Zoe</p>
 
-    <div class="slide visivel" id="m3s1"><div class="letra">
+  <div id="m3s1" class="letra">
     <p>Já cantei uma canção de amor</p>
     <p>Já cantei uma canção da graça</p>
-    </div></div>
-    <div class="slide" id="m3s2"><div class="letra">
-    <p>E por quê não cantar na dor?</p>
-    <p>Quando o meu coração está quebrado?</p>
-    </div></div>
-    <div class="slide" id="m3s3"><div class="letra">
+  </div>
+  <div id="m3s2" class="letra oculto">
     <p>Há um vinho novo pra descer</p>
     <p>Sobre odres que já foram rasgados</p>
-    </div></div>
-    <div class="slide" id="m3s4"><div class="letra">
+  </div>
+  <div id="m3s3" class="letra oculto">
     <p>Eu cantarei uma canção na minha dor</p>
     <p>O choro pode durar uma noite</p>
     <p>A alegria vem com a manhã</p>
-    </div></div>
+  </div>
 
-    <div class="nav">
-        <button onclick="anteriorSlide()">◀ Anterior</button>
-        <button onclick="proximoSlide()">Próximo ▶</button>
-    </div>
+  <div class="navegacao">
+    <button class="botao" style="width:120px;" onclick="anteriorSlide()">◀ Anterior</button>
+    <button class="botao" style="width:120px;" onclick="proximoSlide()">Próximo ▶</button>
+  </div>
 </div>
 
-<!-- ========== MÚSICA 4 ========== -->
-<div id="musica4" class="tela-musica escondido">
-    <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
-    <h2 class="titulo">COMO ANTIGAMENTE</h2>
+<!-- ===== MÚSICA 4 ===== -->
+<div id="musica4" class="pagina oculto">
+  <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
+  <h2 style="color:#ff3333; font-size:28px;">COMO ANTIGAMENTE</h2>
 
-    <div class="slide visivel" id="m4s1"><div class="letra">
+  <div id="m4s1" class="letra">
     <p>Já faz tempo que eu não ouço Tua voz</p>
     <p>Já faz tempo que eu não ouço Tua oração</p>
-    </div></div>
-    <div class="slide" id="m4s2"><div class="letra">
+  </div>
+  <div id="m4s2" class="letra oculto">
     <p>Quanto tempo faz que eu não Te dou um louvor</p>
     <p>Ou uma pregação?</p>
-    </div></div>
-    <div class="slide" id="m4s3"><div class="letra">
-    <p>Aquela madrugada eu olhei pro Teu quarto</p>
-    <p>A porta estava fechada e Você dormindo</p>
-    </div></div>
-    <div class="slide" id="m4s4"><div class="letra">
-    <p>Sem falar de quando entrei naquele culto</p>
-    <p>Mas Você não estava ligado comigo</p>
-    </div></div>
-    <div class="slide" id="m4s5"><div class="letra">
-    <p>Quanto tempo faz que eu não posso Te usar</p>
-    <p>Quanto tempo faz que eu não posso Te tocar</p>
-    </div></div>
-    <div class="slide" id="m4s6"><div class="letra">
-    <p>O tempo está passando e Você assim</p>
-    <p>Eu quero no Teu quarto Te encontrar</p>
+  </div>
+  <div id="m4s3" class="letra oculto">
     <p>Faz tanto tempo...</p>
-    </div></div>
+  </div>
 
-    <div class="nav">
-        <button onclick="anteriorSlide()">◀ Anterior</button>
-        <button onclick="proximoSlide()">Próximo ▶</button>
-    </div>
+  <div class="navegacao">
+    <button class="botao" style="width:120px;" onclick="anteriorSlide()">◀ Anterior</button>
+    <button class="botao" style="width:120px;" onclick="proximoSlide()">Próximo ▶</button>
+  </div>
 </div>
 
-<!-- ========== MÚSICA 5 ========== -->
-<div id="musica5" class="tela-musica escondido">
-    <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
-    <h2 class="titulo">DE VOLTA</h2>
-    <p class="artista">— Medley</p>
+<!-- ===== MÚSICA 5 ===== -->
+<div id="musica5" class="pagina oculto">
+  <span class="voltar" onclick="voltarInicio()">← Voltar ao Início</span>
+  <h2 style="color:#ff3333; font-size:28px;">DE VOLTA</h2>
+  <p style="color:#888; margin-bottom:30px;">— Medley</p>
 
-    <div class="slide visivel" id="m5s1"><div class="letra">
+  <div id="m5s1" class="letra">
     <p>Vinde, voltemos ao Senhor</p>
     <p>Pois Ele de volta nos levou ao deserto</p>
-    </div></div>
-    <div class="slide" id="m5s2"><div class="letra">
-    <p>Para nos lembrar das primeiras obras</p>
-    <p>E da essência</p>
-    </div></div>
-    <div class="slide" id="m5s3"><div class="letra">
-    <p>Muros Ele levantará em nossos caminhos</p>
+  </div>
+  <div id="m5s2" class="letra oculto">
+    <p>Muros Ele levantará</p>
     <p>Com espinhos Ele nos cercará</p>
-    </div></div>
-    <div class="slide" id="m5s4"><div class="letra">
-    <p>Para ensinar que no final</p>
+  </div>
+  <div id="m5s3" class="letra oculto">
     <p>Ele amadurece o nosso amor</p>
-    </div></div>
-    <div class="slide" id="m5s5"><div class="letra">
     <p>Ainda que seja pela dor</p>
-    <p>Ele é fiel, pra sempre bom</p>
-    </div></div>
+  </div>
 
-    <div class="nav">
-        <button onclick="anteriorSlide()">◀ Anterior</button>
-        <button onclick="proximoSlide()">Próximo ▶</button>
-    </div>
+  <div class="navegacao">
+    <button class="botao" style="width:120px;" onclick="anteriorSlide()">◀ Anterior</button>
+    <button class="botao" style="width:120px;" onclick="proximoSlide()">Próximo ▶</button>
+  </div>
 </div>
 
 <script>
 let musicaAtual = 0;
 let slideAtual = 1;
-const totalSlides = {1:6, 2:5, 3:4, 4:6, 5:5};
+const totalSlides = {1:4, 2:3, 3:3, 4:3, 5:3};
 
-function abrirMusica(n){
-    musicaAtual = n;
-    slideAtual = 1;
-    document.getElementById('inicio').classList.add('escondido');
-    document.getElementById('musica'+n).classList.remove('escondido');
-    mostrarSlide();
+function abrirMusica(n) {
+  musicaAtual = n;
+  slideAtual = 1;
+  document.getElementById('inicio').classList.add('oculto');
+  document.getElementById('musica'+n).classList.remove('oculto');
+  mostrarSlide();
 }
 
-function voltarInicio(){
-    document.getElementById('inicio').classList.remove('escondido');
-    for(let i=1; i<=5; i++){
-        document.getElementById('musica'+i).classList.add('escondido');
-    }
-    musicaAtual = 0;
+function voltarInicio() {
+  document.getElementById('inicio').classList.remove('oculto');
+  for(let i=1; i<=5; i++) {
+    document.getElementById('musica'+i).classList.add('oculto');
+  }
+  musicaAtual = 0;
 }
 
-function mostrarSlide(){
-    for(let i=1; i<=10; i++){
-        const el = document.getElementById('m'+musicaAtual+'s'+i);
-        if(el) el.classList.remove('visivel');
-    }
-    document.getElementById('m'+musicaAtual+'s'+slideAtual).classList.add('visivel');
+function mostrarSlide() {
+  for(let i=1; i<=10; i++) {
+    const el = document.getElementById('m'+musicaAtual+'s'+i);
+    if(el) el.classList.add('oculto');
+  }
+  document.getElementById('m'+musicaAtual+'s'+slideAtual).classList.remove('oculto');
 }
 
-function proximoSlide(){
-    let max = totalSlides[musicaAtual];
-    slideAtual++;
-    if(slideAtual > max) slideAtual = 1;
-    mostrarSlide();
+function proximoSlide() {
+  let max = totalSlides[musicaAtual];
+  slideAtual++;
+  if(slideAtual > max) slideAtual = 1;
+  mostrarSlide();
 }
 
-function anteriorSlide(){
-    let max = totalSlides[musicaAtual];
-    slideAtual--;
-    if(slideAtual < 1) slideAtual = max;
-    mostrarSlide();
+function anteriorSlide() {
+  let max = totalSlides[musicaAtual];
+  slideAtual--;
+  if(slideAtual < 1) slideAtual = max;
+  mostrarSlide();
 }
 </script>
 
